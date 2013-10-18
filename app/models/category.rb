@@ -25,7 +25,6 @@ class Category < ActiveRecord::Base
     [:name, :parent, :desc, :parent_id]
   end
 
-  attr_protected :lft, :rgt, :depth, as: :admin
   #! attr_accessible :name, :parent, :desc, :parent_id
   #! attr_accessible :name, :parent, :desc, :parent_id, :article_ids, :child_ids, :created_at, :updated_at, as: :admin
 

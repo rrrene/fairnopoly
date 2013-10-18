@@ -99,7 +99,7 @@ Fairnopoly::Application.routes.draw do
   scope :constraints => lambda {|request|
     request.params[:id] && !["assets","system","admin","public","favicon.ico", "favicon"].any?{|url| request.params[:id].match(/^#{url}/)}
   } do
-    match "/*id" => 'contents#show'
+    get "/*id" => 'contents#show'
   end
 
 end

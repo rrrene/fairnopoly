@@ -22,7 +22,7 @@ $icon-spacing: 40px; // "incons" is the name of the folder
 @import "compass/utilities/sprites";
 
 // locate the folders with the icons in
-@import "icon/*.png";
+@import "./icon/*.png";
 $icon: sprite-map("icon/*.png");
 
 // compass, make icons plizz

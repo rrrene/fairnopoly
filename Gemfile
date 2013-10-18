@@ -1,7 +1,10 @@
 source 'http://rubygems.org'
 
 #Rails
-gem 'rails', '~> 3.2.14'
+gem 'rails'
+
+gem 'activerecord-session_store'
+gem 'rails-observers'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -20,7 +23,7 @@ end
 
 # Forms & Upload
 gem "paperclip", ">= 3.0"
-gem 'formtastic'
+gem 'formtastic', :github => "justinfrench/formtastic"
 gem "recaptcha", :require => "recaptcha/rails" #Captcha Gem
 
 
@@ -35,7 +38,7 @@ gem "friendly_id", ">= 4.0.9" # Friendly_id for beautiful links
 gem 'awesome_nested_set' # tree structure for categories
 gem 'amoeba'
 gem 'sanitize' # Parser based sanitization
-gem 'strong_parameters' # Rails 4-like mass-assignment protection
+#gem 'strong_parameters' # Rails 4-like mass-assignment protection
 
 #gem "acts_as_paranoid", "~>0.4.0" # for softdelete
 #gem "acts_as_follower" # Follow Users and Articles not used for the moment
@@ -64,7 +67,7 @@ gem 'factory_girl_rails'
 gem 'faker'
 
 #Rails Adminrails
-gem 'rails_admin'
+gem 'rails_admin',  github: "sferik/rails_admin"
 
 # Assets that need to be toplevel
 gem 'tinymce-rails'
@@ -76,14 +79,13 @@ gem 'kontoapi-ruby'
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
+
 
    # CSS
-  gem 'sass-rails', '~> 3.2'
+  gem 'sass-rails'
   gem "font-awesome-rails"
-  gem "susy", "~> 1.0.8"
-  gem "compass", "~> 0.13.alpha.4"
-  gem 'compass-rails'
+  gem "susy", "~> 1.0.9"
+  gem "compass-rails", "~> 2.0.alpha.0"
 
   # JS
   gem 'jquery-ui-rails'
@@ -95,7 +97,7 @@ group :assets do
   gem 'modernizr-rails'
   # gem 'turbolinks'
   # gem 'jquery-turbolinks'
-end
+
 
 group :production, :staging do
   gem 'newrelic_rpm' #Monitoring service

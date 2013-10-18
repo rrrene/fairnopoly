@@ -9,7 +9,7 @@ RailsAdmin.config do |config|
   # Set the admin name here (optional second array element will appear in red). For example:
   config.main_app_name = ['Fairnopoly', 'Admin']
 
-  config.attr_accessible_role { :admin }
+  #config.attr_accessible_role { :admin }
 
   # or for a more dynamic name:
   # config.main_app_name = Proc.new { |controller| [Rails.application.engine_name.titleize, controller.params['action'].titleize] }

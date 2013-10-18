@@ -44,7 +44,7 @@
 		color: $white;
 	}
 	.Btn--blue {
-		@include sprite-background-position($icon-sprites, 'pencil--white', 8px, 9px);
+		//@include sprite-background-position($icon-sprites, 'pencil--white', 8px, 9px);
 		margin-left: 1em;
 	}
 	.Btn--blue:after {
