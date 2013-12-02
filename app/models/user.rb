@@ -87,7 +87,8 @@ class User < ActiveRecord::Base
   scope :sorted_ngo, order(:nickname).where(:ngo => true)
   scope :ngo_with_profile_image, where(:ngo => true ).joins(:image).limit(5)
 
-  #belongs_to :articles_with_donation, class_name: 'Article', inverse_of: :donated_ngo
+  has_many :articles_with_donation, class_name: 'Article', inverse_of: :donated_ngo
+
   #belongs_to :invitor ,:class_name => 'User', :foreign_key => 'invitor_id'
 
   has_many :ratings, foreign_key: 'rated_user_id', :dependent => :destroy, inverse_of: :rated_user
@@ -230,6 +231,15 @@ class User < ActiveRecord::Base
   # get all users with ngo status but not current
   def self.sorted_ngo_without_current current_user
     self.order(:nickname).where("ngo = ? AND id != ?", true, current_user.id)
+  end
+
+
+  def ngo_donation_income
+     sum = Money.new(0)
+    Transaction.joins(:article).where("transactions.state = 'sold'").where("articles.friendly_percent_organisation = ?", self.id).each do |t|
+     sum += t.donation_amount_with_quantity
+    end
+    sum
   end
 
 

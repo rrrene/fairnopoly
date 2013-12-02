@@ -38,6 +38,8 @@ class Transaction < ActiveRecord::Base
 
   auto_sanitize :message, :forename, :surname, :street, :address_suffix, :city, :zip, :country
 
+  monetize :donation_amount_with_quantity_cents
+
   enumerize :selected_transport, in: Article::TRANSPORT_TYPES
   enumerize :selected_payment, in: Article::PAYMENT_TYPES
 
@@ -126,7 +128,6 @@ class Transaction < ActiveRecord::Base
     true
   end
 
-
   def deletable?
     available?
   end
@@ -196,6 +197,12 @@ class Transaction < ActiveRecord::Base
 
   def multiple?
     is_a? MultipleFixedPriceTransaction
+  end
+
+  # the amount of donation from this transaction with the quantity
+  # it is not enough to take the :calculated_friendly_cents from article, because it is 0 for ngo articles!
+  def donation_amount_with_quantity_cents
+    ((self.article.price_cents * (self.article.friendly_percent / 100.0)) * self.quantity_bought ).ceil
   end
 
   # Default behavior for associations in subclasses
