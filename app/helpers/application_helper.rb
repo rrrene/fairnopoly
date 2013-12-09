@@ -71,6 +71,10 @@ module ApplicationHelper
     @search_cache || Article.new
   end
 
+  def user_search_cache
+    @user_search_cache || User.new
+  end
+
   # Switch for specific page
   def is_search_result?
     controller.controller_name == 'articles' && controller.action_name == 'index'

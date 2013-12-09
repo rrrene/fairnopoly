@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 
   after_create :create_default_library
 
-  include Search
+  include UserSearch
 
   # Setup accessible (or protected) attributes for your model
 

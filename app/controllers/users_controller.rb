@@ -27,10 +27,13 @@ class UsersController < InheritedResources::Base
 
 
   before_filter :show_notice, only: [:show]
-  before_filter :authorize_resource, except: [:login]
+  before_filter :authorize_resource, except: [:login, :index]
   before_filter :dont_cache, only: [:show]
   skip_before_filter :authenticate_user!, only: [:show, :profile, :login, :index]
   skip_after_filter :verify_authorized_with_exceptions, only: [:login]
+
+  #search_cache
+  before_filter :build_search_cache, :only => :index
 
 
   def login
@@ -60,16 +63,29 @@ class UsersController < InheritedResources::Base
     def permitted_profile_params
       params.permit :print
     end
+    def permitted_search_params
+      params.permit :page, :keywords
+    end
+
+    def search_for query
+      ######## Solr
+        search = query.find_like_this permitted_search_params[:page]
+        return search.results
+      ########
+      rescue Errno::ECONNREFUSED
+        render_hero :action => "sunspot_failure"
+        return policy_scope(User).page permitted_search_params[:page]
+    end
 
   ################## Inherited Resources
   protected
 
     def collection
-        @users ||= search_for @search_cache
+        @users ||= search_for @user_search_cache
     end
 
     def build_search_cache
-     @search_cache = User.new(permitted_params[:user])
+     @user_search_cache = User.new(permitted_params[:user])
     end
 
 
