@@ -36,6 +36,8 @@ class User < ActiveRecord::Base
 
   after_create :create_default_library
 
+  include Search
+
   # Setup accessible (or protected) attributes for your model
 
   def self.user_attrs

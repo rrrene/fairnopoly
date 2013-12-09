@@ -86,7 +86,7 @@ Fairnopoly::Application.routes.draw do
 
   #the user routes
 
-  resources :users, :only => [:show] do
+  resources :users, :only => [:show, :index] do
     resources :libraries, :except => [:new,:edit]
     resources :library_elements, :except => [:new, :edit]
     resources :ratings, :only => [:create, :index] do
@@ -94,6 +94,7 @@ Fairnopoly::Application.routes.draw do
     end
     collection do
       get 'login'
+       get 'autocomplete'
     end
     member do
       get 'profile'
