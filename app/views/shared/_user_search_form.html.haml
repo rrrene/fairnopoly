@@ -1,0 +1,38 @@
+-#
+-#
+-# == License:
+-# Fairnopoly - Fairnopoly is an open-source online marketplace.
+-# Copyright (C) 2013 Fairnopoly eG
+-#
+-# This file is part of Fairnopoly.
+-#
+-# Fairnopoly is free software: you can redistribute it and/or modify
+-# it under the terms of the GNU Affero General Public License as
+-# published by the Free Software Foundation, either version 3 of the
+-# License, or (at your option) any later version.
+-#
+-# Fairnopoly is distributed in the hope that it will be useful,
+-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-# GNU Affero General Public License for more details.
+-#
+-# You should have received a copy of the GNU Affero General Public License
+-# along with Fairnopoly.  If not, see <http://www.gnu.org/licenses/>.
+-#
+
+= semantic_form_for user_search_cache, :url => users_path, :html => { :method => 'get', :class => "search-form"}, :builder => ::Fairtastic::FormBuilder do |f|
+  .Hero-search
+    .l-Inner
+      .l-Left
+        %a.Btn.Btn--gray{:href => libraries_path, :title => "" }
+          %i.icon-box
+          Einladung verschicken
+      .l-Middle
+        = f.inputs :class => "Search" do
+          .Search-input
+            = f.input :nickname, :label => false, :tooltip => false ,:input_html => { :id => "search_input", :placeholder =>  t('welcome.search_user') }
+          .Search-button
+            = image_submit_tag("icon/search.png", :alt => t('common.actions.search'), :title => t('common.actions.search'))
+      .l-Right
+        %button.Btn.Filter-btn Suche starten
+
