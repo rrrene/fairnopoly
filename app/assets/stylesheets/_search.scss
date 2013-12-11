@@ -92,4 +92,16 @@
   }
 }
 
+.Search-switch {
+  position: absolute;
+  bottom: -20px;
+  left: 10px;
+  color:$gray;
+  z-index:1;
+  @include rem(font-size, 12px);
+  cursor:pointer;
+  &:hover {
+    color: $blue;
+  }
+}
 

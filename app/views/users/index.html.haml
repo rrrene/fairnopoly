@@ -24,10 +24,7 @@
   %h3= t("common.text.no_search_result")
   = t("common.text.no_search_result_text")
 - else
-  -#= @users.to_json
   - @users.each do |user|
     .User.User--teaser
       = render '/users/profile_img' , user: user
-  -#= render partial: '/articles/shared/articles_grid', locals:{ articles: @articles }
-  -#= paginate @users
-
+  = paginate @users

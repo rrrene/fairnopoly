@@ -36,6 +36,23 @@ class UsersController < InheritedResources::Base
   before_filter :build_search_cache, :only => :index
 
 
+  #Sunspot Autocomplete
+  def autocomplete
+    search = Sunspot.search(User) do
+      fulltext permitted_search_params[:keywords] do
+        fields(:nickname)
+      end
+    end
+    @nicknames = []
+    search.hits.each do |hit|
+      nickname = hit.stored(:nickname).first
+      @nicknames.push(nickname)
+    end
+    render :json => @nicknames
+  rescue Errno::ECONNREFUSED
+    render :json => []
+  end
+
   def login
     login! do |format|
       format.html {render "/devise/sessions/new" , :layout => false}

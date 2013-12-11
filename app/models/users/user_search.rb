@@ -24,7 +24,7 @@ module UserSearch
 
   included do
     searchable do
-      text :nickname, :boost => 5.0, :stored => true
+      text :nickname, :stored => true
     end
 
     # Indexing via Delayed Job Daemon
@@ -45,8 +45,10 @@ module UserSearch
       fulltext self.nickname do
           fields(:nickname)
         end
+
+        paginate :page => page, :per_page => Kaminari.config.default_per_page
       end
-      #paginate :page => page, :per_page => Kaminari.config.default_per_page
+
    end
 
 end
