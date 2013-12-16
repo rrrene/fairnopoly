@@ -23,8 +23,10 @@
 - if @users.empty?
   %h3= t("common.text.no_search_result")
   = t("common.text.no_search_result_text")
+
 - else
-  - @users.each do |user|
-    .User.User--teaser
-      = render '/users/profile_img' , user: user
+  %section.l-UserList.Grid-mansory
+    - @users.each do |user|
+      %User{ class: 'Grid User User--teaser' }
+        = render '/users/profile_img' , user: user
   = paginate @users

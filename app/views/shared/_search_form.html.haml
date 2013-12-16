@@ -48,8 +48,8 @@
           .Search-input
             = f.input :title, :label => false, :tooltip => false ,:input_html => { :id => "search_input", :placeholder =>  t('welcome.search_fair'),  "data-autocomplete" => autocomplete_articles_path }
           .Search-switch
-            = link_to "Artikel suchen", articles_path
-            = link_to "Benutzer suchen", users_path
+            = "Artikel suchen "
+            = link_to "Nutzer suchen", users_path
           .Search-extend.js-filter-toggle
             = t('common.text.extended_search')
           .Search-button

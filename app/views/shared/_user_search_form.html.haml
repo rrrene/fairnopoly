@@ -21,19 +21,19 @@
 -#
 
 = semantic_form_for user_search_cache, :url => users_path, :html => { :method => 'get', :class => "search-form"}, :builder => ::Fairtastic::FormBuilder do |f|
-  .Hero-search
+  .Hero-search.Hero-search-user
     .l-Inner
       .l-Left
-        %a.Btn.Btn--gray{:href => libraries_path, :title => "" }
-          %i.icon-box
+        %button.Btn.Btn--gray{:href => users_path, :title => "" }
           Einladung verschicken
       .l-Middle
         = f.inputs :class => "Search" do
           .Search-input
-            = f.input :nickname, :label => false, :tooltip => false ,:input_html => { :id => "search_input", :placeholder =>  t('welcome.search_user'), "data-autocomplete" => autocomplete_users_path }
+            = f.input :nickname, :label => false, :tooltip => false ,:input_html => { :id => "search_input", :placeholder =>  t('welcome.search_user') }
           .Search-switch
+            = "Nutzer suchen "
             = link_to "Artikel suchen", articles_path
-            = link_to "Benutzer suchen", users_path
+
           .Search-button
             = image_submit_tag("icon/search.png", :alt => t('common.actions.search'), :title => t('common.actions.search'))
       .l-Right

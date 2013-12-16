@@ -45,7 +45,6 @@ module UserSearch
       fulltext self.nickname do
           fields(:nickname)
         end
-
         paginate :page => page, :per_page => Kaminari.config.default_per_page
       end
 
