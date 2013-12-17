@@ -73,9 +73,13 @@ Gemfile.local
 *.swp
 # other fragments
 *.~lock.*
+*.swo
 
 .ruby-version
 .ruby-gemset
 
 # compass sprites
 app/assets/images/icon-*.png
+
+# Redis
+dump.rdb
