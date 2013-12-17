@@ -26,18 +26,6 @@ module UserSearch
     searchable do
       text :nickname, :stored => true
     end
-
-    # Indexing via Delayed Job Daemon
-    handle_asynchronously :solr_index, queue: 'indexing', priority: 50
-    handle_asynchronously :solr_index!, queue: 'indexing', priority: 50
-
-    alias_method_chain :remove_from_index, :delayed
-    alias :solr_remove_from_index :remove_from_index
-
-  end
-
-  def remove_from_index_with_delayed
-    Delayed::Job.enqueue RemoveIndexJob.new(record_class: self.class.to_s, attributes: self.attributes), queue: 'indexing', priority: 50
   end
 
   def find_like_this page
