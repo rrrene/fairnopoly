@@ -29,29 +29,30 @@ class UsersController < InheritedResources::Base
   before_filter :show_notice, only: [:show]
   before_filter :authorize_resource, except: [:login, :index]
   before_filter :dont_cache, only: [:show]
-  skip_before_filter :authenticate_user!, only: [:show, :profile, :login, :index]
-  skip_after_filter :verify_authorized_with_exceptions, only: [:login]
+  skip_before_filter :authenticate_user!, only: [:show, :profile, :login, :index, :autocomplete]
+  skip_after_filter :verify_authorized_with_exceptions, only: [:login, :autocomplete]
 
   #search_cache
   before_filter :build_search_cache, :only => :index
 
 
   #Sunspot Autocomplete
-  #def autocomplete
-  #  search = Sunspot.search(User) do
-  #    fulltext permitted_search_params[:keywords] do
-  #      fields(:nickname)
-  #    end
-  #  end
-  #  @nicknames = []
-  # search.hits.each do |hit|
-  #    nickname = hit.stored(:nickname).first
-  #    @nicknames.push(nickname)
-  #  end
-  #  render :json => @nicknames
-  #rescue Errno::ECONNREFUSED
-  #  render :json => []
-  #end
+  def autocomplete
+
+    search = Sunspot.search(User) do
+      fulltext permitted_search_params[:keywords] do
+        fields(:nickname)
+      end
+    end
+    @nicknames = []
+   search.hits.each do |hit|
+      nickname = hit.stored(:nickname).first
+      @nicknames.push(nickname)
+    end
+    render :json => @nicknames
+  rescue Errno::ECONNREFUSED
+    render :json => []
+  end
 
   def login
     login! do |format|
@@ -91,7 +92,7 @@ class UsersController < InheritedResources::Base
       ########
       rescue Errno::ECONNREFUSED
         render_hero :action => "sunspot_failure"
-        return policy_scope(User).page permitted_search_params[:page]
+        return User.page permitted_search_params[:page]
     end
 
   ################## Inherited Resources
@@ -104,6 +105,5 @@ class UsersController < InheritedResources::Base
     def build_search_cache
      @user_search_cache = User.new(permitted_params[:user])
     end
-
 
 end

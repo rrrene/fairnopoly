@@ -29,7 +29,7 @@
       .l-Middle
         = f.inputs :class => "Search" do
           .Search-input
-            = f.input :nickname, :label => false, :tooltip => false ,:input_html => { :id => "search_input", :placeholder =>  t('welcome.search_user') }
+            = f.input :nickname, :label => false, :tooltip => false ,:input_html => { :id => "user_search_input", :placeholder =>  t('welcome.search_user'),  "data-autocomplete" => autocomplete_users_path  }
           .Search-switch
             = "Nutzer suchen "
             = link_to "Artikel suchen", articles_path

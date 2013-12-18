@@ -21,6 +21,10 @@
 #
 class UserPolicy < Struct.new(:user, :resource)
 
+  def index?
+    true
+  end
+
   def profile?
     true
   end
