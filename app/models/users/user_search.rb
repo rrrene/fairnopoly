@@ -23,7 +23,7 @@ module UserSearch
   extend ActiveSupport::Concern
 
   included do
-    searchable do
+    searchable :if => :is_legal_entity? do
       text :nickname, :stored => true
     end
   end

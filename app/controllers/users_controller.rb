@@ -92,14 +92,16 @@ class UsersController < InheritedResources::Base
       ########
       rescue Errno::ECONNREFUSED
         render_hero :action => "sunspot_failure"
-        return User.page permitted_search_params[:page]
+        return policy_scope(User).page permitted_search_params[:page]
     end
 
   ################## Inherited Resources
   protected
 
     def collection
+      if @user_search_cache
         @users ||= search_for @user_search_cache
+      end
     end
 
     def build_search_cache

@@ -89,6 +89,8 @@ class User < ActiveRecord::Base
   scope :sorted_ngo, order(:nickname).where(:ngo => true)
   scope :ngo_with_profile_image, where(:ngo => true ).joins(:image).limit(5)
 
+  scope :legal_entity, where(:type => :LegalEntity)
+
   #belongs_to :articles_with_donation, class_name: 'Article', inverse_of: :donated_ngo
   #belongs_to :invitor ,:class_name => 'User', :foreign_key => 'invitor_id'
 
@@ -227,6 +229,10 @@ class User < ActiveRecord::Base
   # @api public
   def is_ngo?
     self.ngo
+  end
+
+  def is_legal_entity?
+    self.is_a?(LegalEntity)
   end
 
   # get all users with ngo status but not current

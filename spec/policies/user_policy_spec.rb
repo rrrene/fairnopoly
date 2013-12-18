@@ -30,6 +30,7 @@ describe UserPolicy do
   context "for a visitor" do
     it { should permit(:show)    }
     it { should permit(:profile) }
+    it { should permit(:index)}
   end
 
   context "for a random logged-in user" do
@@ -37,6 +38,7 @@ describe UserPolicy do
 
     it { should permit(:show)             }
     it { should permit(:profile)          }
+    it { should permit(:index)            }
   end
 
 

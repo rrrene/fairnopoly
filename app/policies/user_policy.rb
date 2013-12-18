@@ -33,4 +33,10 @@ class UserPolicy < Struct.new(:user, :resource)
     true
   end
 
+   class Scope < Struct.new(:user, :scope)
+    def resolve
+      scope.legal_entity
+    end
+  end
+
 end
