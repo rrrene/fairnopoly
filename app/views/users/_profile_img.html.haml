@@ -48,4 +48,7 @@
         %i.icon-user
         = link_to(t('users.legal_status.show.private_user'), profile_user_path(user))
 
+    - if user.cooperative_member?
+      %p Genossenschaftsmitglied
+
   = render '/users/ratings', user: user
