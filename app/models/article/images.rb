@@ -108,7 +108,7 @@ module Article::Images
       # TODO needs refactoring to be more dynamic
       if image_url && image_url =~ URI::regexp
         begin
-          image = Timeout::timeout(60) do # 1 minute timeout (should even cover very large images)
+          image = Terminator.terminate 60 do # 1 minute timeout (should even cover very large images)
             Image.new(image: URI.parse(image_url))
           end
         rescue

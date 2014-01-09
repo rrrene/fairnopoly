@@ -22,7 +22,7 @@ class ToolboxController < ApplicationController
   def rss
     @items = get_feed_items
     respond_to do |format|
-      format.html { render :layout => false }
+      format.html { render layout: false }
     end
   end
 
@@ -63,7 +63,7 @@ class ToolboxController < ApplicationController
   private
     def get_feed_items
       begin
-        Timeout::timeout(10) do #10 second timeout
+        Terminator.terminate 10 do #10 second timeout
           OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:ssl_version] = 'SSLv3' # See comment to http://stackoverflow.com/q/20169301/409087
                                                                            # TODO Set /etc/ssl/certs as sll_ca_folder to remove this hack
           feed = open 'https://info.fairnopoly.de/?feed=rss', ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
@@ -72,7 +72,7 @@ class ToolboxController < ApplicationController
           rss = RSS::Parser.parse(feed.read, false)
           rss.items.first(3)
         end
-      rescue Timeout::Error
+      rescue Terminator.error
         nil
       end
     end

@@ -79,6 +79,9 @@ gem 'jquery-rails'
 # KontoAPI checks bank data
 gem 'kontoapi-ruby'
 
+# Library for better timeouts
+gem 'terminator'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
