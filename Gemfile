@@ -52,6 +52,8 @@ gem "sunspot-queue" # sidekiq
 # Sidekiq
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'sidekiq-superworker', git: 'git://github.com/KonstantinKo/sidekiq-superworker.git' # execution ordering
+gem 'sidekiq_monitor' # advanced monitoring
 
 # Controller Gems
 gem 'devise' # authentication

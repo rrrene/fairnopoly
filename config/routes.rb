@@ -125,6 +125,7 @@ Fairnopoly::Application.routes.draw do
 
   constraints constraint do
     mount Sidekiq::Web => '/sidekiq'
+    mount Sidekiq::Monitor::Engine => '/sidekiq-monitor'
   end
 
   # TinyCMS Routes Catchup

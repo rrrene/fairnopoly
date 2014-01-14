@@ -19,6 +19,11 @@ namespace :run do
     system 'rake parallel:create'
     system 'rake parallel:prepare'
   end
+
+  desc 'Start sidekiq server from root directory'
+  task :sidekiq do
+    system 'sidekiq -C ./config/sidekiq.yml'
+  end
 end
 
 task update: 'run:update'

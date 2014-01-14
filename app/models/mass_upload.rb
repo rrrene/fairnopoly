@@ -125,12 +125,23 @@ class MassUpload < ActiveRecord::Base
     self.start
     begin
       row_count = 0
+      row_array = []
 
       CSV.foreach(self.file.path, encoding: get_csv_encoding(self.file.path), col_sep: ';', quote_char: '"', headers: true) do |row|
         row_count += 1
+        row['index'] = row_count
         row.delete '€' # delete encoding column
-        ProcessRowMassUploadWorker.perform_async(self.id, row.to_hash, row_count)
+        row_array << row.to_hash
+        #ProcessRowMassUploadWorker.perform_async(self.id, row.to_hash, row_count)
       end
+
+      Superworker.create(:MassUploadSuperworker, :mass_upload_id, :rows) do
+        batch :mass_upload_id, rows: :row do
+          ProcessRowMassUploadWorker :mass_upload_id, :row
+        end
+        FinishMassUploadWorker :mass_upload_id
+      end
+      MassUploadSuperworker.perform_async self.id, row_array
 
       self.update_attribute(:row_count, row_count)
       self.finish
@@ -156,7 +167,7 @@ class MassUpload < ActiveRecord::Base
     logger.debug{ message } if logger
   end
 
-  def process_row unsanitized_row_hash, index
+  def process_row unsanitized_row_hash
     if self.processing?
       begin
         row_hash = sanitize_fields unsanitized_row_hash.dup
@@ -174,7 +185,7 @@ class MassUpload < ActiveRecord::Base
         if article.was_invalid_before? # invalid? call would clear our previous base errors
                                        # fix this by generating the base errors with proper validations
                                        # may be hard for dynamic update model
-          add_article_error_messages(article, index, unsanitized_row_hash)
+          add_article_error_messages(article, unsanitized_row_hash)
         else
           article.process! self
         end
@@ -185,7 +196,7 @@ class MassUpload < ActiveRecord::Base
     end
   end
 
-  def add_article_error_messages(article, index, row_hash)
+  def add_article_error_messages(article, row_hash)
     validation_errors = ""
     csv = CSV.generate_line(MassUpload.article_attributes.map{ |column| row_hash[column] }, col_sep: ';')
     article.errors.full_messages.each do |message|
@@ -193,7 +204,7 @@ class MassUpload < ActiveRecord::Base
     end
     ErroneousArticle.create(
       validation_errors: validation_errors,
-      row_index: index,
+      row_index: row_hash['index'],
       mass_upload: self,
       article_csv: csv
     )

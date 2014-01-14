@@ -25,9 +25,12 @@ class ProcessRowMassUploadWorker
                   retry: false,
                   backtrace: true
 
-  def perform mass_upload_id, row, index
+  def perform mass_upload_id, row
+    puts "Starting to process row \##{row['index']} for MassUpload #{mass_upload_id}."
     mass_upload = MassUpload.find mass_upload_id
-    mass_upload.process_row row, index
+    puts "Found MassUpload. Processing ..."
+    mass_upload.process_row row
+    puts "Finished ProcessRow."
     FinishMassUploadWorker.perform_async mass_upload_id
   end
 end

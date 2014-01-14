@@ -9,4 +9,5 @@ production:
 :queues:
   - [sunspot, 7]
   - [default, 5]
+  - [mass_upload_prioritized, 4]
   - [mass_upload, 3]

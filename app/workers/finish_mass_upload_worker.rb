@@ -21,7 +21,7 @@
 #
 class FinishMassUploadWorker
   include Sidekiq::Worker
-  sidekiq_options queue: :mass_upload,
+  sidekiq_options queue: :mass_upload_prioritized,
                   retry: false,
                   backtrace: true
 
