@@ -46,6 +46,7 @@ gem 'sunspot_rails' , '~> 2.0.0'
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'sidekiq-failures'
+gem 'sidekiq-limit_fetch'
 
 # Sidekiq Integrations
 gem "sunspot-queue" # sidekiq

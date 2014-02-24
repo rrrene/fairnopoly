@@ -10,5 +10,7 @@ production:
   - [sunspot, 7]
   - [default, 5]
   - [mass_upload, 3]
-  - [paperclip,2]
+  - [paperclip, 2]
   - [fastbill, 5]
+:process_limits:
+  mass_upload: 5
