@@ -92,4 +92,10 @@
   }
 }
 
+.l-Left .Btn.Search--compact, .l-Right .Btn.Search--compact, .Search--compact {
+  @include rem(height, 30px);
+}
+.l-Left .Btn.Search--compact {
+  padding-top: 0.1em;
+}
 

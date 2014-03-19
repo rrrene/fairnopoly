@@ -75,7 +75,7 @@
   }
 }
 
-.Hero-category {
+.Searchbar-category {
   float:left;
   text-align:center;
   padding:0.5em 1em;
@@ -90,7 +90,7 @@
   border-radius: 5px;
 }
 
-.Hero-categories {
+.Searchbar-categories {
   list-style:none;
   //overflow-y:hidden;
   height:2em;
@@ -111,7 +111,7 @@
 
 }
 
-.Hero-morecategories {
+.Searchbar-morecategories {
   padding:0.5em 0em;
   a {
     @include colorlink($darkgray);
@@ -176,12 +176,12 @@
   }
 }
 
-.Hero-category:hover .Category-dropdown{
+.Searchbar-category:hover .Category-dropdown{
   left:0px;
   top:2em;
 }
 
-.Hero-presearch {
+.Searchbar-presearch {
   padding:0.75em 0 0;
   display:none;
   @include container;
@@ -194,7 +194,7 @@
   }
 }
 
-.Hero-search { // Ensure our dropdown is over the other things
+.Searchbar-search { // Ensure our dropdown is over the other things
   position: relative;
 }
 

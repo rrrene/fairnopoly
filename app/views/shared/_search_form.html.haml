@@ -19,38 +19,39 @@
 -# You should have received a copy of the GNU Affero General Public License
 -# along with Fairnopoly.  If not, see <http://www.gnu.org/licenses/>.
 -#
-- cache 'category_navigation' do
-  .Hero-presearch
-    %ul.Hero-categories
-      - croots = Category.other_category_last.weighted.includes(:children).sorted_roots
-      - croots.each do |category|
-        %li.Hero-category
-          %a{href: articles_path(article: {categories_and_ancestors: category.self_and_ancestors_ids })}
-            = category.name
-          - if category.children.present?
-            .Category-dropdown
-              = build_category_table(category.children, category.view_columns).html_safe
-    .Hero-morecategories
-      %a#show-all-categories{:href => categories_path}
-        Alle Kategorien
-- cache_if params[:article]==nil, 'article_search_form' do
+- if content_for(:show_categories) == "true"
+  - cache 'category_navigation' do
+    .Searchbar-presearch
+      %ul.Searchbar-categories
+        - croots = Category.other_category_last.weighted.includes(:children).sorted_roots
+        - croots.each do |category|
+          %li.Searchbar-category
+            %a{href: articles_path(article: {categories_and_ancestors: category.self_and_ancestors_ids })}
+              = category.name
+            - if category.children.present?
+              .Category-dropdown
+                = build_category_table(category.children, category.view_columns).html_safe
+      .Searchbar-morecategories
+        %a#show-all-categories{:href => categories_path}
+          Alle Kategorien
+- cache_if (params[:article] == nil), 'article_search_form' do
   = semantic_form_for search_cache, :url => articles_path, :html => { :method => 'get', :class => "search-form"}, :builder => ::Fairtastic::FormBuilder do |f|
-    .Hero-search
+    .Searchbar-search
       .l-Inner
         .l-Left
-          %a.Btn.Btn--gray{:href => libraries_path, :title => "Andere Nutzer*innen haben bereits Sammlungen zu bestimmten Themen erstellt. Beim Durchstöbern dieser Sammlungen kannst auch Du weitere spannende Artikel entdecken." }
+          %a.Btn.Btn--gray.Search--compact{:href => libraries_path, :title => "Andere Nutzer*innen haben bereits Sammlungen zu bestimmten Themen erstellt. Beim Durchstöbern dieser Sammlungen kannst auch Du weitere spannende Artikel entdecken." }
             %i.icon-box
             Sammlungen
         .l-Middle
-          = f.inputs :class => "Search" do
+          = f.inputs class: "Search" do
             .Search-input
-              = f.input :title, :label => false, :tooltip => false ,:input_html => { :id => "search_input", :placeholder =>  t('welcome.search_fair'),  "data-autocomplete" => autocomplete_articles_path }
+              = f.input :title, label: false, tooltip: false ,input_html: { id: "search_input", placeholder:  t('welcome.search_fair'),  "data-autocomplete" => autocomplete_articles_path, class: 'Search--compact' }
             .Search-extend.js-filter-toggle
               = t('common.text.extended_search')
             .Search-button
-              = image_submit_tag("icon/search.png", :alt => t('common.actions.search'), :title => t('common.actions.search'))
+              = image_submit_tag("icon/search.png", alt: t('common.actions.search'), title: t('common.actions.search'))
         .l-Right
-          %button.Btn.Filter-btn Suche starten
+          %button.Btn.Filter-btn.Search--compact Suche starten
       .Filter{ class: (is_search_result? ? 'is-active' : '') }
         .Filter-inner
           .Filter-col

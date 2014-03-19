@@ -101,6 +101,7 @@
                 - else
                   %li.last
                     = link_to "<i class='icon icon-account'></i> ".html_safe + t('common.actions.login') , new_user_session_path, :id => "login-link"
+          = render "/shared/search_form"
         .l-Hero
           = hero
       .l-Main{:role => "main"}
